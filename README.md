@@ -1,16 +1,31 @@
-# realtimedatabase
+# Realtimeapp
+Firebase Realtime Database
 
-A new Flutter project.
+**Group Name** : Hamsa
 
-## Getting Started
+**Group Member Details** :
 
-This project is a starting point for a Flutter application.
+1. NUR AMANINA BINTI MOHD NUBLI 2011402
+2. NUR ATHIRAH BINTI ZAABA 2011156
+3. NIK NURUL FAKHRIWANI BINTI NIK AZLAN 1911480
 
-A few resources to get you started if this is your first Flutter project:
+**Assigned Task** :
+1. User interfaces -
+2. Validator -
+3. Form -
+4. Database -
+5. Github -
+6. Update -
+7. Delete -
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Brief Description of Case Study** : 
+The Firebase real-time database app that will be created should fulfill several requirements such as:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Create a simple app to allow the user to key in their details 
+such as name, gender, age, date of birth, and occupation.
+2. Use the form widget with a validator to check valid input for the 
+above data.
+3. The app should be able to Create, Retrieve, Update and 
+Delete the data from the Firebase Realtime database.
+4. Create a dedicated screen for the above operation 
+(CRUD).
