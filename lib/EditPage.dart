@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class EditPage extends StatefulWidget {
   final Map<String, dynamic> user;
@@ -24,7 +25,8 @@ class _EditPageState extends State<EditPage> {
     genderController = TextEditingController(text: widget.user['gender'] ?? '');
     ageController = TextEditingController(text: widget.user['age'].toString());
     dobController = TextEditingController(
-        text: DateFormat('yyyy-MM-dd').format(widget.user['dob']));
+        text: DateFormat('yyyy-MM-dd')
+            .format(DateTime.parse(widget.user['dob'])));
     occupationController =
         TextEditingController(text: widget.user['occupation']);
   }
@@ -54,6 +56,7 @@ class _EditPageState extends State<EditPage> {
       'occupation': occupation,
       'key': widget.user['key'],
     };
+    print(name);
 
     Navigator.pop(context, editedUser);
   }

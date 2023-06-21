@@ -43,16 +43,21 @@ class _DisplayPageState extends State<DisplayPage> {
   }
 
   void updateUserData(Map<String, dynamic> editedUser) {
-    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
     String userKey = editedUser['key'];
 
     // Convert String to DateTime
     DateTime dob = DateTime.parse(editedUser['dob']);
     editedUser['dob'] = dob;
-
-    databaseRef.child('user_details').child(userKey).update(editedUser).then((_) {
+    print('hoo');
+    databaseRef
+        .child('user_details')
+        .child(userKey)
+        .update(editedUser)
+        .then((_) {
       setState(() {
-        int userIndex = userDetails.indexWhere((user) => user['key'] == userKey);
+        int userIndex =
+            userDetails.indexWhere((user) => user['key'] == userKey);
         if (userIndex != -1) {
           userDetails[userIndex] = editedUser;
         }
@@ -118,7 +123,7 @@ class _DisplayPageState extends State<DisplayPage> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Gender: ${user['gender'] ?? 'N/A'}'),
+                        Text('Gender: ${user['gender']}'),
                         Text('Age: ${user['age']}'),
                         Text(
                           'Date of Birth: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(user['dob']))}',
@@ -139,6 +144,8 @@ class _DisplayPageState extends State<DisplayPage> {
                               ),
                             ).then((editedUser) {
                               if (editedUser != null) {
+                                print('hello');
+                                print(editedUser);
                                 updateUserData(editedUser);
                               }
                             });
