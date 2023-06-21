@@ -1,9 +1,8 @@
+//Nur Amanina 2011402
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_database/firebase_database.dart';
-// import 'package:realtimedatabase/display.dart';
 import 'userdetail.dart';
+import 'databaseView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +44,17 @@ class HomePage extends StatelessWidget {
             const Text(
               'Home Page',
               style: TextStyle(fontSize: 24),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to Database Page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DatabaseViewPage()),
+                );
+              },
+              child: const Text('View Database'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(

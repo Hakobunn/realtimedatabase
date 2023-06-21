@@ -1,3 +1,6 @@
+//UI by Nur Athirah Zaaba 2011156
+//Implementation of database by Nurul Fakhriwani 1911480
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_core/firebase_core.dart';

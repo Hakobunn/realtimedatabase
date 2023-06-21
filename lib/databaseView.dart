@@ -1,37 +1,21 @@
-//by Nur amanina
-
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'display.dart';
+import 'EditPage.dart';
 
-import 'EditPage.dart'; // Import the edit_page.dart file
-
-class DisplayPage extends StatefulWidget {
-  final String name;
-  final String? gender;
-  final int age;
-  final DateTime dob;
-  final String occupation;
-
-  const DisplayPage({
-    Key? key,
-    required this.name,
-    this.gender,
-    required this.age,
-    required this.dob,
-    required this.occupation,
-  }) : super(key: key);
-
+class DatabaseViewPage extends StatefulWidget {
   @override
-  State<DisplayPage> createState() => _DisplayPageState();
+  _DatabaseViewPageState createState() => _DatabaseViewPageState();
 }
 
-class _DisplayPageState extends State<DisplayPage> {
+class _DatabaseViewPageState extends State<DatabaseViewPage> {
+  // Define your database-related variables and methods here
   List<Map<String, dynamic>> userDetails = [];
-
   @override
   void initState() {
     super.initState();
+    // Initialize your database connection and fetch data
     fetchUserDetails();
   }
 
@@ -41,6 +25,24 @@ class _DisplayPageState extends State<DisplayPage> {
       setState(() {
         userDetails.removeWhere((user) => user['key'] == key);
       });
+    });
+  }
+
+  void fetchUserDetails() {
+    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    databaseRef.child('user_details').onChildAdded.listen((event) {
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic>? values =
+            event.snapshot.value as Map<dynamic, dynamic>?;
+        if (values != null) {
+          setState(() {
+            userDetails.add({
+              ...Map<String, dynamic>.from(values),
+              'key': event.snapshot.key,
+            });
+          });
+        }
+      }
     });
   }
 
@@ -63,25 +65,6 @@ class _DisplayPageState extends State<DisplayPage> {
       showMessage('User updated successfully!');
     }).catchError((error) {
       showMessage('Failed to update user: $error');
-    });
-  }
-
-  void fetchUserDetails() {
-    // ignore: deprecated_member_use
-    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
-    databaseRef.child('user_details').onChildAdded.listen((event) {
-      if (event.snapshot.value != null) {
-        Map<dynamic, dynamic>? values =
-            event.snapshot.value as Map<dynamic, dynamic>?;
-        if (values != null) {
-          setState(() {
-            userDetails.add({
-              ...Map<String, dynamic>.from(values),
-              'key': event.snapshot.key,
-            });
-          });
-        }
-      }
     });
   }
 
@@ -142,12 +125,6 @@ class _DisplayPageState extends State<DisplayPage> {
                               ),
                             ).then((editedUser) {
                               updateUserData(editedUser);
-
-                              // if (editedUser != null) {
-                              //   print('hello');
-                              //   print(editedUser);
-                              //   updateUserData(editedUser);
-                              // }
                             });
                           },
                         ),
