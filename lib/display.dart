@@ -34,7 +34,7 @@ class _DisplayPageState extends State<DisplayPage> {
   }
 
   void deleteUser(String key) {
-    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
     databaseRef.child('user_details').child(key).remove().then((_) {
       setState(() {
         userDetails.removeWhere((user) => user['key'] == key);
