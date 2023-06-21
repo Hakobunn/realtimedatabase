@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 
+import 'EditPage.dart'; // Import the edit_page.dart file
+
 class DisplayPage extends StatefulWidget {
   final String name;
   final String? gender;
@@ -40,6 +42,52 @@ class _DisplayPageState extends State<DisplayPage> {
     });
   }
 
+  void updateUserData(Map<String, dynamic> editedUser) {
+    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    String userKey = editedUser['key'];
+
+    // Convert String to DateTime
+    DateTime dob = DateTime.parse(editedUser['dob']);
+    editedUser['dob'] = dob;
+
+    databaseRef.child('user_details').child(userKey).update(editedUser).then((_) {
+      setState(() {
+        int userIndex = userDetails.indexWhere((user) => user['key'] == userKey);
+        if (userIndex != -1) {
+          userDetails[userIndex] = editedUser;
+        }
+      });
+      showMessage('User updated successfully!');
+    }).catchError((error) {
+      showMessage('Failed to update user: $error');
+    });
+  }
+
+  void fetchUserDetails() {
+    // ignore: deprecated_member_use
+    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    databaseRef.child('user_details').onChildAdded.listen((event) {
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic>? values =
+            event.snapshot.value as Map<dynamic, dynamic>?;
+        if (values != null) {
+          setState(() {
+            userDetails.add({
+              ...Map<String, dynamic>.from(values),
+              'key': event.snapshot.key,
+            });
+          });
+        }
+      }
+    });
+  }
+
+  void showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +121,8 @@ class _DisplayPageState extends State<DisplayPage> {
                         Text('Gender: ${user['gender'] ?? 'N/A'}'),
                         Text('Age: ${user['age']}'),
                         Text(
-                            'Date of Birth: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(user['dob']))}'),
+                          'Date of Birth: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(user['dob']))}',
+                        ),
                         Text('Occupation: ${user['occupation']}'),
                       ],
                     ),
@@ -81,10 +130,18 @@ class _DisplayPageState extends State<DisplayPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.edit),
+                          icon: const Icon(Icons.edit),
                           onPressed: () {
-                            // Handle edit action
-                            // You can navigate to another screen for editing or show a dialog
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditPage(user: user),
+                              ),
+                            ).then((editedUser) {
+                              if (editedUser != null) {
+                                updateUserData(editedUser);
+                              }
+                            });
                           },
                         ),
                         IconButton(
@@ -127,24 +184,5 @@ class _DisplayPageState extends State<DisplayPage> {
         ),
       ),
     );
-  }
-
-  void fetchUserDetails() {
-    // ignore: deprecated_member_use
-    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
-    databaseRef.child('user_details').onChildAdded.listen((event) {
-      if (event.snapshot.value != null) {
-        Map<dynamic, dynamic>? values =
-            event.snapshot.value as Map<dynamic, dynamic>?;
-        if (values != null) {
-          setState(() {
-            userDetails.add({
-              ...Map<String, dynamic>.from(values),
-              'key': event.snapshot.key,
-            });
-          });
-        }
-      }
-    });
   }
 }
