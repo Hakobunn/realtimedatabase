@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "260742079293",
-    "firebase_url": "https://realtimeapp-1ff33-default-rtdb.firebaseio.com",
-    "project_id": "realtimeapp-1ff33",
-    "storage_bucket": "realtimeapp-1ff33.appspot.com"
+    "project_number": "724918729749",
+    "project_id": "database-8feb1",
+    "storage_bucket": "database-8feb1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:260742079293:android:583e81ba83a18d04269b54",
+        "mobilesdk_app_id": "1:724918729749:android:a74a47576a9ba0f342a21c",
         "android_client_info": {
           "package_name": "com.example.realtimedatabase"
         }
       },
       "oauth_client": [
         {
-          "client_id": "260742079293-mbinmk1st78mt9kev4aofvvgl7msf4t4.apps.googleusercontent.com",
+          "client_id": "724918729749-6vksp7sglc2mr92rar509m7p77eakatv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDkq67vnkSWRWxi4IEEWk8BVDniWOaxzck"
+          "current_key": "AIzaSyCi8tBFoQ1HJTZ0bmzZ1MnNquNeTOn1l14"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "260742079293-mbinmk1st78mt9kev4aofvvgl7msf4t4.apps.googleusercontent.com",
+              "client_id": "724918729749-6vksp7sglc2mr92rar509m7p77eakatv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

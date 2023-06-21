@@ -31,6 +31,15 @@ class _DisplayPageState extends State<DisplayPage> {
     fetchUserDetails();
   }
 
+  void deleteUser(String key) {
+    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    databaseRef.child('user_details').child(key).remove().then((_) {
+      setState(() {
+        userDetails.removeWhere((user) => user['key'] == key);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +77,48 @@ class _DisplayPageState extends State<DisplayPage> {
                         Text('Occupation: ${user['occupation']}'),
                       ],
                     ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            // Handle edit action
+                            // You can navigate to another screen for editing or show a dialog
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Delete User'),
+                                  content: const Text(
+                                      'Are you sure you want to delete this user?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Cancel'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('Delete'),
+                                      onPressed: () {
+                                        deleteUser(user['key']);
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -87,7 +138,10 @@ class _DisplayPageState extends State<DisplayPage> {
             event.snapshot.value as Map<dynamic, dynamic>?;
         if (values != null) {
           setState(() {
-            userDetails.add(Map<String, dynamic>.from(values));
+            userDetails.add({
+              ...Map<String, dynamic>.from(values),
+              'key': event.snapshot.key,
+            });
           });
         }
       }

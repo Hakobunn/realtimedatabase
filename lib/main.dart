@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:realtimedatabase/display.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -31,6 +30,7 @@ class UserDetailsForm extends StatefulWidget {
   const UserDetailsForm({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _UserDetailsFormState createState() => _UserDetailsFormState();
 }
 
@@ -75,6 +75,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
       DateTime dob = _selectedDate;
 
       // Push user details to Firebase Realtime Database
+      // ignore: deprecated_member_use
       DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
       databaseRef.child('user_details').push().set({
         'name': name,
@@ -148,7 +149,6 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _resetForm(); // Reset the form when back button is pressed
         return true;
       },
       child: Scaffold(
@@ -245,8 +245,14 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                 ),
                 const SizedBox(height: 24.0),
                 ElevatedButton(
-                  onPressed: _submitForm,
-                  child: const Text('Submit'),
+                  onPressed: () {
+                    _submitForm();
+                    _resetForm(); // Reset the form after submitting the details
+                  },
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ],
             ),
