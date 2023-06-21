@@ -16,6 +16,7 @@ class _EditPageState extends State<EditPage> {
   late TextEditingController genderController;
   late TextEditingController ageController;
   late TextEditingController dobController;
+  // late DateTime _selectedDate;
   late TextEditingController occupationController;
 
   @override
@@ -24,10 +25,11 @@ class _EditPageState extends State<EditPage> {
     nameController = TextEditingController(text: widget.user['name']);
     genderController = TextEditingController(text: widget.user['gender'] ?? '');
     ageController = TextEditingController(text: widget.user['age'].toString());
-    dobController = TextEditingController(text: widget.user['dob']);
-    // dobController = TextEditingController(
-    //     text: DateFormat('yyyy-MM-dd')
-    //         .format(DateTime.parse(widget.user['dob'])));
+    // dobController = TextEditingController(text: widget.user['dob']);
+    dobController = TextEditingController(
+        text: DateFormat('yyyy-MM-dd')
+            .format(DateTime.parse(widget.user['dob'])));
+    // _selectedDate = DateTime.parse(widget.user['dob']);
     occupationController =
         TextEditingController(text: widget.user['occupation']);
   }
