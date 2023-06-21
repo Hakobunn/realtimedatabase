@@ -1,6 +1,8 @@
+//Create page and all code here Nur Athirah Zaaba
+// Alter the code to success Nur Amanina
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class EditPage extends StatefulWidget {
   final Map<String, dynamic> user;
@@ -16,7 +18,7 @@ class _EditPageState extends State<EditPage> {
   late TextEditingController genderController;
   late TextEditingController ageController;
   late TextEditingController dobController;
-  // late DateTime _selectedDate;
+  late DateTime _selectedDate;
   late TextEditingController occupationController;
 
   @override
@@ -29,9 +31,25 @@ class _EditPageState extends State<EditPage> {
     dobController = TextEditingController(
         text: DateFormat('yyyy-MM-dd')
             .format(DateTime.parse(widget.user['dob'])));
-    // _selectedDate = DateTime.parse(widget.user['dob']);
+    _selectedDate = DateTime.parse(widget.user['dob']);
     occupationController =
         TextEditingController(text: widget.user['occupation']);
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        dobController.text = DateFormat('yyyy-MM-dd').format(_selectedDate);
+      });
+    }
   }
 
   @override
@@ -49,7 +67,6 @@ class _EditPageState extends State<EditPage> {
     String gender = genderController.text;
     int age = int.tryParse(ageController.text) ?? 0;
     String dob = dobController.text; // Store dob as String
-    // DateTime dob = DateFormat('yyyy-MM-dd').parse(dobController.text);
     print(dob);
     String occupation = occupationController.text;
 
@@ -106,8 +123,18 @@ class _EditPageState extends State<EditPage> {
               keyboardType: TextInputType.number,
             ),
             TextField(
+              readOnly: true,
               controller: dobController,
-              decoration: const InputDecoration(labelText: 'Date of Birth'),
+              decoration: InputDecoration(
+                labelText: 'Date of Birth',
+                suffixIcon: IconButton(
+                  onPressed: () => _selectDate(context),
+                  icon: Icon(Icons.calendar_today),
+                ),
+              ),
+
+              // controller: dobController,
+              // decoration: const InputDecoration(labelText: 'Date of Birth'),
             ),
             TextField(
               controller: occupationController,
