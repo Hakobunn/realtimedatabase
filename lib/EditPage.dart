@@ -46,6 +46,7 @@ class _EditPageState extends State<EditPage> {
     String gender = genderController.text;
     int age = int.tryParse(ageController.text) ?? 0;
     DateTime dob = DateFormat('yyyy-MM-dd').parse(dobController.text);
+    print(dob);
     String occupation = occupationController.text;
 
     Map<String, dynamic> editedUser = {
@@ -56,7 +57,6 @@ class _EditPageState extends State<EditPage> {
       'occupation': occupation,
       'key': widget.user['key'],
     };
-    print(name);
 
     Navigator.pop(context, editedUser);
   }

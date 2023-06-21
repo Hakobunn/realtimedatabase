@@ -43,13 +43,19 @@ class _DisplayPageState extends State<DisplayPage> {
   }
 
   void updateUserData(Map<String, dynamic> editedUser) {
+    print('hoo');
     DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
     String userKey = editedUser['key'];
+    print('hol');
 
     // Convert String to DateTime
-    DateTime dob = DateTime.parse(editedUser['dob']);
-    editedUser['dob'] = dob;
-    print('hoo');
+    // DateTime dob = DateFormat('yyyy-MM-dd').parse(editedUser['dob']);
+
+    // String dob =
+    //     DateFormat('yyyy-MM-dd').format(DateTime.parse(editedUser['dob']));
+    // print(dob);
+    // editedUser['dob'] = dob;
+
     databaseRef
         .child('user_details')
         .child(userKey)
@@ -143,11 +149,14 @@ class _DisplayPageState extends State<DisplayPage> {
                                 builder: (context) => EditPage(user: user),
                               ),
                             ).then((editedUser) {
-                              if (editedUser != null) {
-                                print('hello');
-                                print(editedUser);
-                                updateUserData(editedUser);
-                              }
+                              print(editedUser);
+                              updateUserData(editedUser);
+
+                              // if (editedUser != null) {
+                              //   print('hello');
+                              //   print(editedUser);
+                              //   updateUserData(editedUser);
+                              // }
                             });
                           },
                         ),
