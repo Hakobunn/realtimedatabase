@@ -10,14 +10,13 @@ Firebase Realtime Database
 3. NIK NURUL FAKHRIWANI BINTI NIK AZLAN 1911480
 
 **Assigned Task** :
-1. User interfaces -
-2. Validator -
-3. Form -
-4. Database -
-5. Github -
-6. Update -
-7. Delete -
-8. Display -
+1. Form and validation - Athirah
+2. Database - Wani
+3. Github - Wani
+4. Update - Athirah, Amanina
+5. Delete - Wani
+6. Create - Wani
+7. Retrieve - Amanina
 
 **Brief Description of Case Study** : 
 The Firebase real-time database app that will be created should fulfill several requirements such as:
