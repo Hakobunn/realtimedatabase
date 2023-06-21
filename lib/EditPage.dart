@@ -24,9 +24,10 @@ class _EditPageState extends State<EditPage> {
     nameController = TextEditingController(text: widget.user['name']);
     genderController = TextEditingController(text: widget.user['gender'] ?? '');
     ageController = TextEditingController(text: widget.user['age'].toString());
-    dobController = TextEditingController(
-        text: DateFormat('yyyy-MM-dd')
-            .format(DateTime.parse(widget.user['dob'])));
+    dobController = TextEditingController(text: widget.user['dob']);
+    // dobController = TextEditingController(
+    //     text: DateFormat('yyyy-MM-dd')
+    //         .format(DateTime.parse(widget.user['dob'])));
     occupationController =
         TextEditingController(text: widget.user['occupation']);
   }
@@ -45,7 +46,8 @@ class _EditPageState extends State<EditPage> {
     String name = nameController.text;
     String gender = genderController.text;
     int age = int.tryParse(ageController.text) ?? 0;
-    DateTime dob = DateFormat('yyyy-MM-dd').parse(dobController.text);
+    String dob = dobController.text; // Store dob as String
+    // DateTime dob = DateFormat('yyyy-MM-dd').parse(dobController.text);
     print(dob);
     String occupation = occupationController.text;
 
@@ -75,9 +77,26 @@ class _EditPageState extends State<EditPage> {
               controller: nameController,
               decoration: const InputDecoration(labelText: 'Name'),
             ),
-            TextField(
-              controller: genderController,
-              decoration: const InputDecoration(labelText: 'Gender'),
+            DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                labelText: 'Gender',
+              ),
+              value: genderController.text,
+              onChanged: (value) {
+                setState(() {
+                  genderController.text = value!;
+                });
+              },
+              items: const [
+                DropdownMenuItem(
+                  value: 'Male',
+                  child: Text('Male'),
+                ),
+                DropdownMenuItem(
+                  value: 'Female',
+                  child: Text('Female'),
+                ),
+              ],
             ),
             TextField(
               controller: ageController,
