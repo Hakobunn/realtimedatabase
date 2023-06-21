@@ -17,6 +17,7 @@ Firebase Realtime Database
 5. Github -
 6. Update -
 7. Delete -
+8. Display -
 
 **Brief Description of Case Study** : 
 The Firebase real-time database app that will be created should fulfill several requirements such as:
