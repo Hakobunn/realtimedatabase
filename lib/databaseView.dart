@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
-import 'display.dart';
+// import 'display.dart';
 import 'EditPage.dart';
 
 class DatabaseViewPage extends StatefulWidget {
+  const DatabaseViewPage({Key? key}) : super(key: key);
+
   @override
   _DatabaseViewPageState createState() => _DatabaseViewPageState();
 }
@@ -30,7 +32,7 @@ class _DatabaseViewPageState extends State<DatabaseViewPage> {
   }
 
   void fetchUserDetails() {
-    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
     databaseRef.child('user_details').onChildAdded.listen((event) {
       if (event.snapshot.value != null) {
         Map<dynamic, dynamic>? values =
