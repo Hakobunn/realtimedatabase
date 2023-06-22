@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         // primarySwatch:Color(0xFF000080),
       ),
       // home: const UserDetailsForm(),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
@@ -46,9 +46,9 @@ MaterialColor createCustomColor(int colorValue) {
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
   final Color tdGrey = Colors.grey;
-  final Color tdNavyBlue = Color(0xFF000080);
+  final Color tdNavyBlue = const Color(0xFF000080);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

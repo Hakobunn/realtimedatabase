@@ -67,7 +67,6 @@ class _EditPageState extends State<EditPage> {
     String gender = genderController.text;
     int age = int.tryParse(ageController.text) ?? 0;
     String dob = dobController.text; // Store dob as String
-    print(dob);
     String occupation = occupationController.text;
 
     Map<String, dynamic> editedUser = {
@@ -80,6 +79,29 @@ class _EditPageState extends State<EditPage> {
     };
 
     Navigator.pop(context, editedUser);
+
+    _showUpdatedDialog();
+  }
+
+  void _showUpdatedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('User Updated'),
+          content:
+              const Text('User information has been updated successfully.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -129,7 +151,7 @@ class _EditPageState extends State<EditPage> {
                 labelText: 'Date of Birth',
                 suffixIcon: IconButton(
                   onPressed: () => _selectDate(context),
-                  icon: Icon(Icons.calendar_today),
+                  icon: const Icon(Icons.calendar_today),
                 ),
               ),
 
