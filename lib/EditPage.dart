@@ -80,6 +80,28 @@ class _EditPageState extends State<EditPage> {
     };
 
     Navigator.pop(context, editedUser);
+
+    _showUpdatedDialog();
+  }
+
+  void _showUpdatedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('User Updated'),
+          content: const Text('User information has been updated successfully.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
